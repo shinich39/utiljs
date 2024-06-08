@@ -1,0 +1,15 @@
+{
+  "name": "utiljs",
+  "version": "1.0.0",
+  "description": "Javascript utilities.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "shinich39 <shinich39@gmail.com>",
+  "license": "MIT"
+}
