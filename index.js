@@ -873,7 +873,7 @@ function wait(delay) {
 /**
  * Ref.
  * https://stackoverflow.com/questions/24586110/resolve-promises-one-after-another-i-e-in-sequence
- * @param {function[]} funcs 
+ * @param {function[]} funcs The functions will return promise.
  * @returns 
  */
 function promiseAll(funcs) {

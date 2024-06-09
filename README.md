@@ -309,7 +309,7 @@ const res = utils.cover(src, dst);
 await utils.wait(1000); // ms
 ```
 
-- utils.promiseAll(func)
+- utils.promiseAll(funcs)
 
 ```js
 let i = 0;
