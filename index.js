@@ -380,14 +380,11 @@ function xor(str, salt) {
 
 /**
  * Parse string command to array.
- * 
- * e.g. 
- * 
- * "git commit -m \'update \\'many\\' features\' -f true"
- * 
- * [ 'git', 'commit', '-m', "update \\'many\\' features", '-f', 'true' ]
  * @param {string} str 
  * @returns 
+ * @example
+ * parseCommand("git commit -m \'update \\'many\\' features\' -f true")
+ * // ['git', 'commit', '-m', "update \\'many\\' features", '-f', 'true']
  */
 function parseCommand(str) {
   let result = [],
@@ -446,14 +443,12 @@ function parseQuery(str) {
  * Parse $ + key in string.
  * 
  * Dot notation supported.
- * 
- * e.g. 
- * 
- * "${color.name} sky", {color:{name:"blue"}}
- * 
- * "blue sky"
  * @param {string} str 
  * @param {object} obj 
+ * @example
+ * const str = "${color.name} sky";
+ * const obj = {color:{name:"blue"}};
+ * parseTemplate(str, obj); // "blue sky"
  */
 function parseTemplate(str, obj) {
   return str.replace(/\$\{[^}]+\}/g, function(item) {
@@ -632,10 +627,8 @@ function getRandomValue(arr) {
 }
 
 /**
- * e.g.
  * 
- * [[1,2,3],[4,5,6,7],[8,9,10]]
- * @param {any[][]} arr 
+ * @param {any[][]} arr e.g. [[1,2,3],[4,5,6,7],[8,9,10]]
  * @returns {any[]}
  */
 function getAllCases(arr) {
@@ -871,10 +864,26 @@ function getCoveredSize(src, dst) {
  * @param {number} delay ms
  * @returns 
  */
-const wait = function(delay) {
+function wait(delay) {
   return new Promise(function(resolve) {
     return setTimeout(resolve, delay);
   });
+}
+
+/**
+ * Ref.
+ * https://stackoverflow.com/questions/24586110/resolve-promises-one-after-another-i-e-in-sequence
+ * @param {function[]} funcs 
+ * @returns 
+ */
+function promiseAll(funcs) {
+  return funcs.reduce(function(prev, curr) {
+    return prev.then(function(prevResult) {
+      return curr().then(function(currResult) {
+        return prevResult.concat([currResult]);
+      });
+    });
+  }, Promise.resolve([]));
 }
 
 const __module__ = {
@@ -933,6 +942,7 @@ const __module__ = {
   cover: getCoveredSize,
   
   wait,
+  promiseAll,
 }
 
 // esm
