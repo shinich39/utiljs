@@ -691,7 +691,7 @@ function copyObject(obj) {
 /**
  * 
  * @param {object[]} arr 
- * @param {string} key value must be string, number, boolean
+ * @param {string} key
  */
 function groupByKey(arr, key) {
   const group = {};

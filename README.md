@@ -290,6 +290,7 @@ const res = util.group(arr, key);
 // }
 ```
 
+
 - util.query(obj, qry)
 
 ```js
