@@ -681,11 +681,11 @@ function getAllCases(arr) {
  * @returns 
  */
 function copyObject(obj) {
-  const res = isArray(obj) ? [] : {};
+  const result = isArray(obj) ? [] : {};
   for (const [key, value] of Object.entries(obj)) {
-    res[key] = isObject(value) && !isNull(value) ? clone(value) : value;
+    result[key] = isObject(value) && !isNull(value) ? copyObject(value) : value;
   }
-  return res;
+  return result;
 }
 
 /**
