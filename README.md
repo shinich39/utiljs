@@ -5,56 +5,56 @@ Javascript utilities.
 ## Usage
 
 ```js
-import utils from 'utiljs'; // esm
+import util from 'utiljs'; // esm
 ```
 
 - Object type validations
 
 ```js
-const res = utils.isBoolean(true); // true
-const res = utils.isNumber(1); // true
-const res = utils.isNumeric("1"); // true
-const res = utils.isString("str"); // true
-const res = utils.isEmptyString(""); // true
-const res = utils.isObject({ a: 1 }); // true
-const res = utils.isEmptyObject({}); // true
-const res = utils.isNull(null); // true
-const res = utils.isArray([0, 1, 2]); // true
-const res = utils.isBooleanArray([true, false]); // true
-const res = utils.isNumberArray([1,2,3]); // true
-const res = utils.isStringArray(["a", "b", "c"]); // true
-const res = utils.isObjectArray([{a: 1}, {a: 2}, {a: 3}]); // true
-const res = utils.isEmptyArray([]); // true
-const res = utils.isFunction(isNaN); // true
-const res = utils.isEmpty(undefined); // true
-const res = utils.isEmpty(null); // true
-const res = utils.isSameType(1, 2); // true
-const res = utils.isSameType(null, null); // true
+const res = util.isBoolean(true); // true
+const res = util.isNumber(1); // true
+const res = util.isNumeric("1"); // true
+const res = util.isString("str"); // true
+const res = util.isEmptyString(""); // true
+const res = util.isObject({ a: 1 }); // true
+const res = util.isEmptyObject({}); // true
+const res = util.isNull(null); // true
+const res = util.isArray([0, 1, 2]); // true
+const res = util.isBooleanArray([true, false]); // true
+const res = util.isNumberArray([1,2,3]); // true
+const res = util.isStringArray(["a", "b", "c"]); // true
+const res = util.isObjectArray([{a: 1}, {a: 2}, {a: 3}]); // true
+const res = util.isEmptyArray([]); // true
+const res = util.isFunction(isNaN); // true
+const res = util.isEmpty(undefined); // true
+const res = util.isEmpty(null); // true
+const res = util.isSameType(1, 2); // true
+const res = util.isSameType(null, null); // true
 ```
 
-- utils.random(min, max)
+- util.random(min, max)
 
 ```js
-const res = utils.random(0, 1);
+const res = util.random(0, 1);
 // 0 <= n < 1
 ```
 
-- utils.id()
+- util.id()
 
 ```js
-const res = utils.id();
+const res = util.id();
 // 66334bcae2c321000000
 ```
 
-- utils.xor(str, salt)
+- util.xor(str, salt)
 
 ```js
 const str = "Lorem ipsum dolor sit amet.";
 const salt = "3939";
-const encrypted = utils.xor(str, salt);
+const encrypted = util.xor(str, salt);
 // VA\^ZI@L^WV_VA@PGRTVM
 
-const decrypted = utils.xor(encrypted, salt);
+const decrypted = util.xor(encrypted, salt);
 // Lorem ipsum dolor sit amet.
 ```
 
@@ -62,9 +62,9 @@ const decrypted = utils.xor(encrypted, salt);
 
 ```js
 const str = "Oregano Leaves, 0.5 tsp";
-const res = utils.splitInt(str);
+const res = util.splitInt(str);
 // [ 'Oregano Leaves, ', '0', '.', '5', ' tsp' ]
-const res = utils.splitFloat(str);
+const res = util.splitFloat(str);
 // [ 'Oregano Leaves, ', '0.5', ' tsp' ]
 ```
 
@@ -72,18 +72,18 @@ const res = utils.splitFloat(str);
 
 ```js
 const str = "Lorem ipsum dolor sit amet.";
-const full = utils.toFullWidth(str);
+const full = util.toFullWidth(str);
 // Ｌｏｒｅｍ　ｉｐｓｕｍ　ｄｏｌｏｒ　ｓｉｔ　ａｍｅｔ．
-const half = utils.toHalfWidth(full);
+const half = util.toHalfWidth(full);
 // Lorem ipsum dolor sit amet.
 ```
 
-- utils.compare(strA, strB)
+- util.compare(strA, strB)
 
 ```js
 const a = "Lorem ipsum dolor sit amet.";
 const b = "Lorem ipsum foobar sit aget.";
-const res = utils.compare(a, b);
+const res = util.compare(a, b);
 // {
 //   acc: 0.8727272727272727,
 //   result: [
@@ -108,7 +108,7 @@ Compare after split by word
 // 
 const a = "Lorem ipsum dolor sit amet.".split(/([\s])/g);
 const b = "Lorem ipsum foobar sit aget.".split(/([\s])/g);
-const res = utils.compare(a, b);
+const res = util.compare(a, b);
 // {
 //   acc: 0.7777777777777778,
 //   result: [
@@ -122,27 +122,27 @@ const res = utils.compare(a, b);
 // }
 ```
 
-- utils.parseCommand(str)
+- util.parseCommand(str)
 
 ```js
 const str = "git commit -m \'update \\'many\\' features\' -f true";
-const res = utils.parseCommand(str);
+const res = util.parseCommand(str);
 // [ 'git', 'commit', '-m', "update \\'many\\' features", '-f', 'true' ]
 ```
 
-- utils.parseQuery(str)
+- util.parseQuery(str)
 
 ```js
 const str = "https://www.google.com/search?q=bing&page=10&page=39";
-const res = utils.parseQuery(str);
+const res = util.parseQuery(str);
 // { q: [ 'bing' ], page: [ '10', '39' ] }
 
 const str = "q=bing&page=10&page=39";
-const res = utils.parseQuery(str);
+const res = util.parseQuery(str);
 // { q: [ 'bing' ], page: [ '10', '39' ] }
 ```
 
-- utils.parseTemplate(str, obj)
+- util.parseTemplate(str, obj)
 
 ```js
 const str = "${a} ${b.bb.bbb} sit amet.";
@@ -154,81 +154,81 @@ const obj = {
     }
   }
 }
-const res = utils.parseTemplate(str, obj);
+const res = util.parseTemplate(str, obj);
 // Lorem ipsum dolor sit amet.
 ```
 
-- utils.min(arr)
+- util.min(arr)
 
 ```js
 const arr = [1, 2, 3, 4, 5, 6];
-const res = utils.min(arr);
+const res = util.min(arr);
 // 1
 ```
 
-- utils.max(arr)
+- util.max(arr)
 
 ```js
 const arr = [1, 2, 3, 4, 5, 6];
-const res = utils.max(arr);
+const res = util.max(arr);
 // 6
 ```
 
-- utils.avg(arr)
+- util.avg(arr)
 
 ```js
 const arr = [1, 2, 3, 4, 5, 6];
-const res = utils.avg(arr);
+const res = util.avg(arr);
 // 3.5
 ```
 
-- utils.mode(arr)
+- util.mode(arr)
 
 ```js
 const arr = [1, 2, 3, 3, 4, 5, 6];
-const res = utils.mode(arr);
+const res = util.mode(arr);
 // 3
 ```
 
-- utils.choose(arr)
+- util.choose(arr)
 
 ```js
 const arr = [1, 2, 3, 4, 5, 6];
-const res = utils.choose(arr);
+const res = util.choose(arr);
 // 1 ~ 6
 ```
 
-- utils.array(len, value)
+- util.array(len, value)
 
 ```js
-const res = utils.array(5, 1);
+const res = util.array(5, 1);
 // [ 1, 1, 1, 1, 1 ]
 
-const res = utils.array(5, e => e);
+const res = util.array(5, e => e);
 // [ 0, 1, 2, 3, 4 ]
 
-const res = utils.array(5, []);
+const res = util.array(5, []);
 res[0].push(1);
 // [ [1], [], [], [], [] ]
 ```
 
-- utils.sort(arr)
+- util.sort(arr)
 
 ```js
 const arr = ["a-10","b-2",true,"b-11","a-9",null,1,false];
-const res = utils.sort(arr);
+const res = util.sort(arr);
 // [null, false, true, 1, 'a-9', 'a-10', 'b-2', 'b-11']
 ```
 
-- utils.shuffle(arr)
+- util.shuffle(arr)
 
 ```js
 const arr = [1, 2, 3, 4, 5, 6];
-const res = utils.shuffle(arr);
+const res = util.shuffle(arr);
 // [ 5, 1, 2, 4, 6, 3 ]
 ```
 
-- utils.cases(arr)
+- util.cases(arr)
 
 ```js
 const arr = [
@@ -237,7 +237,7 @@ const arr = [
   [8,9,10],
 ];
 
-const res = utils.cases(arr);
+const res = util.cases(arr);
 // [
 //   [ 1, 4, 8 ], [ 1, 4, 9 ], [ 1, 4, 10 ],
 //   [ 1, 5, 8 ], [ 1, 5, 9 ], [ 1, 5, 10 ],
@@ -254,7 +254,7 @@ const res = utils.cases(arr);
 // ]
 ```
 
-- utils.copy(obj)
+- util.copy(obj)
 
 ```js
 const obj = {
@@ -262,13 +262,35 @@ const obj = {
     b: "A"
   }
 }
-const clone = utils.copy(obj);
+const clone = util.copy(obj);
 clone.a.b = "B";
 // obj: { a: { b: "A" } }
 // clone: { a: { b: "B" } }
 ```
 
-- utils.query(obj, qry)
+- util.group(obj, key)
+
+```js
+const arr = [
+  { name: "john", age: 10 },
+  { name: "john", age: 15 },
+  { name: 1, age: 10 },
+  { name: {}, age: 9 },
+  { name: [], age: 9 },
+  { name: true, age: 9 },
+]
+const key = "name";
+const res = util.group(arr, key);
+// {
+//   '1': [ { name: 1, age: 10 } ],
+//   john: [ { name: 'john', age: 10 }, { name: 'john', age: 15 } ],
+//   '[object Object]': [ { name: {}, age: 9 } ],
+//   '': [ { name: [], age: 9 } ],
+//   true: [ { name: true, age: 9 } ]
+// }
+```
+
+- util.query(obj, qry)
 
 ```js
 const obj = {
@@ -281,40 +303,40 @@ const qry = {
   }
 }
 
-const res = utils.query(obj, qry);
+const res = util.query(obj, qry);
 // true
 ```
 
-- utils.contain(src, dst)
+- util.contain(src, dst)
 
 ```js
 const src = { width: 5, height: 10 }
 const dst = { width: 20, height: 20 }
-const res = utils.contain(src, dst);
+const res = util.contain(src, dst);
 // { width: 10, height: 20 }
 ```
 
-- utils.cover(src, dst)
+- util.cover(src, dst)
 
 ```js
 const src = { width: 5, height: 10 }
 const dst = { width: 20, height: 20 }
-const res = utils.cover(src, dst);
+const res = util.cover(src, dst);
 // { width: 20, height: 40 }
 ```
 
-- utils.wait(delay)
+- util.wait(delay)
 
 ```js
-await utils.wait(1000); // ms
+await util.wait(1000); // ms
 ```
 
-- utils.promiseAll(funcs)
+- util.promiseAll(funcs)
 
 ```js
 let i = 0;
 async function a() { return i++; }
 const funcs = [a,a,a];
-const res = await utils.promiseAll(funcs);
+const res = await util.promiseAll(funcs);
 // [0,1,2]
 ```

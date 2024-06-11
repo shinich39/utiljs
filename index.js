@@ -689,6 +689,23 @@ function copyObject(obj) {
 }
 
 /**
+ * 
+ * @param {object[]} arr 
+ * @param {string} key value must be string, number, boolean
+ */
+function groupByKey(arr, key) {
+  const group = {};
+  for (const obj of arr) {
+    if (!group[String(obj[key])]) {
+      group[String(obj[key])] = [obj];
+    } else {
+      group[String(obj[key])].push(obj);
+    }
+  }
+  return group;
+} 
+
+/**
  * Query operator list:
  * 
  * $and, $nand, $or, $nor, $in, $nin, $gt, $gte, $lt, $lte, $eq, $ne, $fn, $re
@@ -936,6 +953,7 @@ const __module__ = {
 
   copy: copyObject,
   clone: copyObject,
+  group: groupByKey,
   query: queryObject,
 
   contain: getContainedSize,

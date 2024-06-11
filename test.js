@@ -1,17 +1,17 @@
-import utils from "./index.js";
+import util from "./index.js";
 
-// const res = utils.sort(["a-10","b-2",true,"b-11","a-9",null,1,false]);
+// const res = util.sort(["a-10","b-2",true,"b-11","a-9",null,1,false]);
 // console.log(res)
 
 // ;(async function() {
 //   console.log(1);
-//   await utils.wait(500);
+//   await util.wait(500);
 //   console.log(2);
 // })();
 
 // const a = "Lorem ipsum dolor sit amet.".split(/([\s])/g);
 // const b = "Lorem ipsum foobar sit aget.".split(/([\s])/g);
-// const res = utils.compare(a, b);
+// const res = util.compare(a, b);
 
 // console.log(res)
 
@@ -25,14 +25,27 @@ import utils from "./index.js";
 //     }
 //   }
 // }
-// const res = utils.parseTemplate(str, obj);
+// const res = util.parseTemplate(str, obj);
 // // Lorem ipsum dolor sit amet.
 // console.log(res)
 
-;(async function() {
-  let i = 0;
-  async function a() { return i++; }
-  const funcs = [a,a,a];
-  const res = await utils.promiseAll(funcs);
-  console.log(res);
-})();
+// ;(async function() {
+//   let i = 0;
+//   async function a() { return i++; }
+//   const funcs = [a,a,a];
+//   const res = await util.promiseAll(funcs);
+//   console.log(res);
+// })();
+
+const arr = [
+  { name: "john", age: 10 },
+  { name: "john", age: 15 },
+  { name: 1, age: 10 },
+  { name: {}, age: 9 },
+  { name: [], age: 9 },
+  { name: true, age: 9 },
+]
+
+const res = util.group(arr, "name");
+
+console.log(res)
