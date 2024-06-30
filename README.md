@@ -58,12 +58,36 @@ const decrypted = util.xor(encrypted, salt);
 // Lorem ipsum dolor sit amet.
 ```
 
-- Split number from string.
+- util.toBase64(str)
+
+```js
+// Ref: https://github.com/mathiasbynens/base64
+const str = "Lorem ipsum dolor sit amet.";
+const res = util.toBase64(str);
+// TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQu
+```
+
+- util.fromBase64(str)
+
+```js
+// Ref: https://github.com/mathiasbynens/base64
+const str = "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQu";
+const res = util.fromBase64(str);
+// Lorem ipsum dolor sit amet.
+```
+
+- util.splitInt(str)
 
 ```js
 const str = "Oregano Leaves, 0.5 tsp";
 const res = util.splitInt(str);
 // [ 'Oregano Leaves, ', '0', '.', '5', ' tsp' ]
+```
+
+- util.splitFloat(str)
+
+```js
+const str = "Oregano Leaves, 0.5 tsp";
 const res = util.splitFloat(str);
 // [ 'Oregano Leaves, ', '0.5', ' tsp' ]
 ```
@@ -79,6 +103,8 @@ const half = util.toHalfWidth(full);
 ```
 
 - util.compare(strA, strB)
+
+Compare all characters.
 
 ```js
 const a = "Lorem ipsum dolor sit amet.";
@@ -102,7 +128,7 @@ const res = util.compare(a, b);
 // }
 ```
 
-Compare after split by word
+Compare after split by word.
 
 ```js
 // 
@@ -290,7 +316,6 @@ const res = util.group(arr, key);
 // }
 ```
 
-
 - util.query(obj, qry)
 
 ```js
@@ -341,3 +366,7 @@ const funcs = [a,a,a];
 const res = await util.promiseAll(funcs);
 // [0,1,2]
 ```
+
+## References
+
+- [base64](https://github.com/mathiasbynens/base64)

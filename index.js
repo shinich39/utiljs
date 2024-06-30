@@ -1,5 +1,6 @@
 'use strict';
 
+const BASE64_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 let __uniq__ = 0;
 
 /**
@@ -9,18 +10,14 @@ let __uniq__ = 0;
  */
 function isBoolean(obj) {
   return typeof obj === "boolean";
-}
-
-/**
+}/**
  * 
  * @param {*} obj 
  * @returns 
  */
 function isNumber(obj) {
   return typeof obj === "number" && !Number.isNaN(obj) && Number.isFinite(obj);
-}
-
-/**
+}/**
  * 
  * @param {*} obj 
  * @returns 
@@ -31,9 +28,7 @@ function isNumeric(obj) {
   } else {
     return isNumber(obj);
   }
-}
-
-/**
+}/**
  * 
  * @param {*} obj 
  * @returns 
@@ -41,7 +36,6 @@ function isNumeric(obj) {
 function isString(obj) {
   return typeof obj === "string";
 }
-
 /**
  * 
  * @param {*} obj 
@@ -50,7 +44,6 @@ function isString(obj) {
 function isEmptyString(obj) {
   return isString(obj) && obj.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "") === ""; // trim
 }
-
 /**
  * 
  * @param {*} obj 
@@ -59,7 +52,6 @@ function isEmptyString(obj) {
 function isObject(obj) {
   return typeof obj === "object" && obj !== null && obj.constructor === Object && Object.getPrototypeOf(obj) === Object.prototype;
 }
-
 /**
  * 
  * @param {*} obj 
@@ -68,7 +60,6 @@ function isObject(obj) {
 function isEmptyObject(obj) {
   return isObject(obj) && Object.keys(obj).length === 0;
 }
-
 /**
  * 
  * @param {*} obj 
@@ -77,7 +68,6 @@ function isEmptyObject(obj) {
 function isNull(obj) {
   return typeof obj === "object" && obj === null;
 }
-
 /**
  * 
  * @param {*} obj 
@@ -90,7 +80,6 @@ function isArray(obj) {
     return Object.prototype.toString.call(obj) === "[object Array]";
   }
 }
-
 /**
  * 
  * @param {*} obj 
@@ -107,7 +96,6 @@ function isBooleanArray(obj) {
   }
   return true;
 }
-
 /**
  * 
  * @param {*} obj 
@@ -124,7 +112,6 @@ function isNumberArray(obj) {
   }
   return true;
 }
-
 /**
  * 
  * @param {*} obj 
@@ -141,7 +128,6 @@ function isStringArray(obj) {
   }
   return true;
 }
-
 /**
  * 
  * @param {*} obj 
@@ -158,7 +144,6 @@ function isObjectArray(obj) {
   }
   return true;
 }
-
 /**
  * 
  * @param {*} obj 
@@ -167,7 +152,6 @@ function isObjectArray(obj) {
 function isEmptyArray(obj) {
   return isArray(obj) && obj.length === 0;
 }
-
 /**
  * 
  * @param {*} obj 
@@ -176,7 +160,6 @@ function isEmptyArray(obj) {
 function isFunction(obj) {
   return typeof obj === "function";
 }
-
 /**
  * 
  * @param {*} obj 
@@ -185,7 +168,6 @@ function isFunction(obj) {
 function isEmpty(obj) {
   return obj === undefined || isNull(obj);
 }
-
 /**
  * 
  * @param {*} obj 
@@ -194,7 +176,6 @@ function isEmpty(obj) {
 function isUndefined(obj) {
   return obj === undefined;
 }
-
 /**
  * 
  * @param {*} objA 
@@ -204,7 +185,6 @@ function isUndefined(obj) {
 function isSameType(objA, objB) {
   return typeof objA === typeof objB && objA.constructor === objB.constructor;
 }
-
 /**
  * 
  * @param {number} min 
@@ -214,7 +194,6 @@ function isSameType(objA, objB) {
 function random(min, max) {
   return Math.random() * (max - min) + min;
 }
-
 /**
  * 
  * @param {string} str 
@@ -223,7 +202,6 @@ function random(min, max) {
 function splitInt(str) {
   return str.split(/([0-9]+)/);
 }
-
 /**
  * 
  * @param {string} str 
@@ -232,7 +210,6 @@ function splitInt(str) {
 function splitFloat(str) {
   return str.split(/([0-9]{0,}\.{0,1}[0-9]{1,})+/);
 }
-
 /**
  * 
  * @param {string} str 
@@ -247,7 +224,6 @@ function toHalfWidth(str) {
       return " ";
     });
 }
-
 /**
  * 
  * @param {string} str 
@@ -262,7 +238,6 @@ function toFullWidth(str) {
       return "　";
     });
 }
-
 /**
  * Get diff between two strings.
  * @param {string} strA 
@@ -346,7 +321,6 @@ function compareStrings(strA, strB) {
 
   return P(M(C(strA, strB), strA, strB), strA, strB);
 }
-
 /**
  * Generate id mongodb objectId style.
  * @returns 
@@ -356,7 +330,6 @@ function id() {
     return Math.floor(Math.random() * 16).toString(16);
   }) + (__uniq__++).toString(16).padStart(6, "0");
 }
-
 /**
  * Encrypt string with XOR Cipher
  * @param {string} str 
@@ -377,7 +350,102 @@ function xor(str, salt) {
   }
   return res;
 }
+/**
+ * Ref. https://github.com/mathiasbynens/base64
+ * @param {string} str 
+ * @param {string} type optional, data:TYPE;base64,DATA
+ * @returns {string} base64
+ */
+function toBase64(str, type)  {
+  str = String(str);
+  if (/[^\0-\xFF]/.test(str)) {
+    // Note: no need to special-case astral symbols here, as surrogates are
+    // matched, and the input is supposed to only contain ASCII anyway.
+    throw new Error("The string to be encoded contains characters outside of the Latin1 range.");
+  }
+  let padding = str.length % 3;
+  let output = "";
+  let position = -1;
+  let a;
+  let b;
+  let c;
+  let buffer;
+  // Make sure any padding is handled outside of the loop.
+  let length = str.length - padding;
 
+  while (++position < length) {
+    // Read three bytes, i.e. 24 bits.
+    a = str.charCodeAt(position) << 16;
+    b = str.charCodeAt(++position) << 8;
+    c = str.charCodeAt(++position);
+    buffer = a + b + c;
+    // Turn the 24 bits into four chunks of 6 bits each, and append the
+    // matching character for each of them to the output.
+    output += (
+      BASE64_CHARACTERS.charAt(buffer >> 18 & 0x3F) +
+      BASE64_CHARACTERS.charAt(buffer >> 12 & 0x3F) +
+      BASE64_CHARACTERS.charAt(buffer >> 6 & 0x3F) +
+      BASE64_CHARACTERS.charAt(buffer & 0x3F)
+    );
+  }
+
+  if (padding == 2) {
+    a = str.charCodeAt(position) << 8;
+    b = str.charCodeAt(++position);
+    buffer = a + b;
+    output += (
+      BASE64_CHARACTERS.charAt(buffer >> 10) +
+      BASE64_CHARACTERS.charAt((buffer >> 4) & 0x3F) +
+      BASE64_CHARACTERS.charAt((buffer << 2) & 0x3F) +
+      "="
+    );
+  } else if (padding == 1) {
+    buffer = str.charCodeAt(position);
+    output += (
+      BASE64_CHARACTERS.charAt(buffer >> 2) +
+      BASE64_CHARACTERS.charAt((buffer << 4) & 0x3F) +
+      "=="
+    );
+  }
+
+  return (type ? `data:${type};base64,` : "") + output;
+}
+/**
+ * Ref. https://github.com/mathiasbynens/base64
+ * @param {string} str base64
+ * @returns {string}
+ */
+function fromBase64(str) {
+  str = String(str)
+    .replace(/^data:([A-Za-z-+\/]+);[A-Za-z0-9]+,/, "")
+    .replace(/[\t\n\f\r ]/g, "");
+  let length = str.length;
+  if (length % 4 == 0) {
+    str = str.replace(/==?$/, "");
+    length = str.length;
+  }
+  // http://whatwg.org/C#alphanumeric-ascii-characters
+  if (length % 4 == 1 || /[^+a-zA-Z0-9/]/.test(str)) {
+    throw new Error('Invalid character: the string to be decoded is not correctly encoded.');
+  }
+  let bitCounter = 0;
+  let bitStorage;
+  let buffer;
+  let output = "";
+  let position = -1;
+  while (++position < length) {
+    buffer = BASE64_CHARACTERS.indexOf(str.charAt(position));
+    bitStorage = bitCounter % 4 ? bitStorage * 64 + buffer : buffer;
+    // Unless this is the first of a group of 4 characters…
+    if (bitCounter++ % 4) {
+      // …convert the first 8 bits to a single ASCII character.
+      output += String.fromCharCode(
+        0xFF & bitStorage >> (-2 * bitCounter & 6)
+      );
+    }
+  }
+  return output;
+}
 /**
  * Parse string command to array.
  * @param {string} str 
@@ -420,7 +488,6 @@ function parseCommand(str) {
   }
   return result;
 }
-
 /**
  * Parse query string in url.
  * @param {string} str 
@@ -438,7 +505,6 @@ function parseQuery(str) {
   }
   return result;
 }
-
 /**
  * Parse $ + key in string.
  * 
@@ -460,7 +526,6 @@ function parseTemplate(str, obj) {
     }
   });
 }
-
 /**
  * Fill array to deepcopied value.
  * @param {number} len 
@@ -488,7 +553,6 @@ function createArray(len, value) {
   }
   return arr;
 }
-
 /**
  * Get minimum value in array.
  * @param {number[]} arr 
@@ -499,7 +563,6 @@ function getMinValue(arr) {
     return curr < prev ? curr : prev;
   }, arr[0] || 0);
 }
-
 /**
  * Get maximum value in array.
  * @param {number[]} arr 
@@ -510,7 +573,6 @@ function getMaxValue(arr) {
     return curr > prev ? curr : prev;
   }, arr[0] || 0);
 }
-
 /**
  * Get arithmetic mean.
  * @param {number[]} arr 
@@ -521,7 +583,6 @@ function getMeanValue(arr) {
     return prev + curr;
   }, 0) / arr.length;
 }
-
 /**
  * Get most frequent value in array.
  * @param {any[]} arr 
@@ -541,7 +602,6 @@ function getModeValue(arr) {
   }
   return maxValue;
 }
-
 /**
  * Sort array ascending order.
  * 
@@ -600,10 +660,8 @@ function sortArray(arr) {
     }
   });
 }
-
 /**
- * Ref.
- * https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+ * Ref. https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
  * @param {any[]} arr 
  * @returns 
  */
@@ -616,7 +674,6 @@ function shuffleArray(arr) {
   }
   return arr;
 }
-
 /**
  * Get random value in array.
  * @param {any[]} arr 
@@ -625,7 +682,6 @@ function shuffleArray(arr) {
 function getRandomValue(arr) {
   return arr[Math.floor(random(0, arr.length))];
 }
-
 /**
  * 
  * @param {any[][]} arr e.g. [[1,2,3],[4,5,6,7],[8,9,10]]
@@ -674,7 +730,6 @@ function getAllCases(arr) {
   }
   return result;
 }
-
 /**
  * Deepcopy object, array...
  * @param {*} obj 
@@ -687,7 +742,6 @@ function copyObject(obj) {
   }
   return result;
 }
-
 /**
  * 
  * @param {object[]} arr 
@@ -704,7 +758,6 @@ function groupByKey(arr, key) {
   }
   return group;
 } 
-
 /**
  * Query operator list:
  * 
@@ -833,7 +886,6 @@ function queryObject(obj, qry) {
   
   return A(obj, qry);
 }
-
 /**
  * 
  * @param {{ width: number, height: number }} src source size
@@ -854,7 +906,6 @@ function getContainedSize(src, dst) {
     }
   }
 }
-
 /**
  * 
  * @param {{ width: number, height: number }} src source size
@@ -875,7 +926,6 @@ function getCoveredSize(src, dst) {
     }
   }
 }
-
 /**
  * 
  * @param {number} delay ms
@@ -886,10 +936,8 @@ function wait(delay) {
     return setTimeout(resolve, delay);
   });
 }
-
 /**
- * Ref.
- * https://stackoverflow.com/questions/24586110/resolve-promises-one-after-another-i-e-in-sequence
+ * Ref. https://stackoverflow.com/questions/24586110/resolve-promises-one-after-another-i-e-in-sequence
  * @param {function[]} funcs The functions will return promise.
  * @returns 
  */
@@ -925,6 +973,9 @@ const __module__ = {
   random,
   id,
   xor, // XOR
+
+  toBase64,
+  fromBase64,
 
   splitInt,
   splitFloat,

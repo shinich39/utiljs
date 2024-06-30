@@ -15,7 +15,6 @@ import util from "./index.js";
 
 // console.log(res)
 
-
 // const str = "${a} ${b.bb.bbb} sit amet.";
 // const obj = {
 //   a: "Lorem ipsum",
@@ -37,15 +36,18 @@ import util from "./index.js";
 //   console.log(res);
 // })();
 
-const arr = [
-  { name: "john", age: 10 },
-  { name: "john", age: 15 },
-  { name: 1, age: 10 },
-  { name: {}, age: 9 },
-  { name: [], age: 9 },
-  { name: true, age: 9 },
-]
+// const arr = [
+//   { name: "john", age: 10 },
+//   { name: "john", age: 15 },
+//   { name: 1, age: 10 },
+//   { name: {}, age: 9 },
+//   { name: [], age: 9 },
+//   { name: true, age: 9 },
+// ]
 
-const res = util.group(arr, "name");
+// const res = util.group(arr, "name");
 
-console.log(res)
+// console.log(res)
+
+console.log(util.toBase64("Lorem ipsum dolor sit amet."))
+console.log(util.fromBase64(util.toBase64("Lorem ipsum dolor sit amet.")))
