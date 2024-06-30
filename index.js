@@ -353,7 +353,7 @@ function xor(str, salt) {
 /**
  * Ref. https://github.com/mathiasbynens/base64
  * @param {string} str 
- * @param {string} type optional, data:TYPE;base64,DATA
+ * @param {string} type optional, mimetype
  * @returns {string} base64
  */
 function toBase64(str, type)  {
