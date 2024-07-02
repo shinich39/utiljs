@@ -49,5 +49,14 @@ import util from "./index.js";
 
 // console.log(res)
 
-console.log(util.toBase64("Lorem ipsum dolor sit amet."))
-console.log(util.fromBase64(util.toBase64("Lorem ipsum dolor sit amet.")))
+// console.log(util.toBase64("Lorem ipsum dolor sit amet."))
+// console.log(util.fromBase64(util.toBase64("Lorem ipsum dolor sit amet.")))
+
+const a = { x: 0, y: 0 };
+const b = { x: 0.25, y: 1 };
+const c = { x: 0.5, y: 1 };
+const d = { x: 1, y: 1 };
+
+console.log(util.bezier([a,b,c,d], 0))
+console.log(util.bezier([a,b,c,d], 0.5))
+console.log(util.bezier([a,b,c,d], 1))

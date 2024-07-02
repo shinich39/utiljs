@@ -195,6 +195,24 @@ function random(min, max) {
   return Math.random() * (max - min) + min;
 }
 /**
+ * CSS cubic-bezier(a, b, c, d) => [{x:0, y:0}, {x:a, y:b}, {x:c, y:d}, {x:1, y:1}]
+ * @param {{x: number, y: number}[]} points [{x, y}]
+ * @param {number} t value between 0 and 1
+ * @returns 
+ */
+function bezier(points, t) {
+  if (points.length === 1) {
+    return points[0];
+  }
+  let newPoints = [];
+  for (let i = 0; i < points.length - 1; i++) {
+    let x = (1 - t) * points[i].x + t * points[i + 1].x;
+    let y = (1 - t) * points[i].y + t * points[i + 1].y;
+    newPoints.push({ x: x, y: y });
+  }
+  return bezier(newPoints, t);
+}
+/**
  * 
  * @param {string} str 
  * @returns 
@@ -971,6 +989,8 @@ const __module__ = {
   isSameType,
 
   random,
+  bezier,
+
   id,
   xor, // XOR
 
