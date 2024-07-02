@@ -10,14 +10,16 @@ let __uniq__ = 0;
  */
 function isBoolean(obj) {
   return typeof obj === "boolean";
-}/**
+}
+/**
  * 
  * @param {*} obj 
  * @returns 
  */
 function isNumber(obj) {
   return typeof obj === "number" && !Number.isNaN(obj) && Number.isFinite(obj);
-}/**
+}
+/**
  * 
  * @param {*} obj 
  * @returns 
@@ -28,7 +30,8 @@ function isNumeric(obj) {
   } else {
     return isNumber(obj);
   }
-}/**
+}
+/**
  * 
  * @param {*} obj 
  * @returns 
@@ -197,20 +200,20 @@ function random(min, max) {
 /**
  * CSS cubic-bezier(a, b, c, d) => [{x:0, y:0}, {x:a, y:b}, {x:c, y:d}, {x:1, y:1}]
  * @param {{x: number, y: number}[]} points [{x, y}]
- * @param {number} t value between 0 and 1
+ * @param {number} time value between 0 and 1
  * @returns 
  */
-function bezier(points, t) {
+function bezier(points, time) {
   if (points.length === 1) {
     return points[0];
   }
   let newPoints = [];
   for (let i = 0; i < points.length - 1; i++) {
-    let x = (1 - t) * points[i].x + t * points[i + 1].x;
-    let y = (1 - t) * points[i].y + t * points[i + 1].y;
+    let x = (1 - time) * points[i].x + time * points[i + 1].x;
+    let y = (1 - time) * points[i].y + time * points[i + 1].y;
     newPoints.push({ x: x, y: y });
   }
-  return bezier(newPoints, t);
+  return bezier(newPoints, time);
 }
 /**
  * 
@@ -263,7 +266,7 @@ function toFullWidth(str) {
  * @returns {{ acc: number, result: { type: number, value: string }[] }}
  */
 function compareStrings(strA, strB) {
-  // create dp
+  // Create dp
   function C(a, b) {
     const dp = [];
     for (let i = 0; i < a.length + 1; i++) {
@@ -275,7 +278,7 @@ function compareStrings(strA, strB) {
     return dp;
   }
 
-  // match a to b
+  // Match a to b
   function M(dp, a, b) {
     for (let i = 1; i <= a.length; i++) {
       for (let j = 1; j <= b.length; j++) {
@@ -290,7 +293,7 @@ function compareStrings(strA, strB) {
     return dp;
   }
 
-  // write diffs
+  // Write diffs
   function P(dp, a, b) {
     let MATCH = 0, 
         INSERT = 1, 
@@ -304,7 +307,6 @@ function compareStrings(strA, strB) {
       const itemA = a[i-1];
       const itemB = b[j-1];
       if (i > 0 && j > 0 && itemA === itemB) {
-        // matched
         if (prev && prev.type === MATCH) {
           prev.value = itemA + prev.value; // add to prev
         } else {
@@ -314,7 +316,6 @@ function compareStrings(strA, strB) {
         i--;
         j--;
       } else if (j > 0 && (i === 0 || dp[i][j-1] >= dp[i-1][j])) {
-        // inserted
         if (prev && prev.type === INSERT) {
           prev.value = itemB + prev.value; // add to prev
         } else {
@@ -322,7 +323,6 @@ function compareStrings(strA, strB) {
         }
         j--;
       } else if (i > 0 && (j === 0 || dp[i][j-1] < dp[i-1][j])) {
-        // deleted
         if (prev && prev.type === DELETE) {
           prev.value = itemA + prev.value; // add to prev
         } else {
@@ -371,7 +371,7 @@ function xor(str, salt) {
 /**
  * Ref. https://github.com/mathiasbynens/base64
  * @param {string} str 
- * @param {string} type optional, mimetype
+ * @param {string|undefined} type mimetype
  * @returns {string} base64
  */
 function toBase64(str, type)  {

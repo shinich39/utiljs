@@ -39,6 +39,18 @@ const res = util.random(0, 1);
 // 0 <= n < 1
 ```
 
+- util.bezier(points, time)
+
+```js
+const p0 = { x: 0, y: 0 };
+const p1 = { x: 0.25, y: 1 };
+const p2 = { x: 0.5, y: 1 };
+const p3 = { x: 1, y: 1 };
+const time = 0.5;
+const res = util.bezier([p0,p1,p2,p3], time);
+// { x: 0.40625, y: 0.875 }
+```
+
 - util.id()
 
 ```js
@@ -58,13 +70,14 @@ const decrypted = util.xor(encrypted, salt);
 // Lorem ipsum dolor sit amet.
 ```
 
-- util.toBase64(str)
+- util.toBase64(str, type)
 
 ```js
 // Ref: https://github.com/mathiasbynens/base64
 const str = "Lorem ipsum dolor sit amet.";
-const res = util.toBase64(str);
-// TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQu
+const type = "image/jpeg"; // optional
+const res = util.toBase64(str, type);
+// data:image/jpeg;base64,TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQu
 ```
 
 - util.fromBase64(str)
@@ -92,21 +105,26 @@ const res = util.splitFloat(str);
 // [ 'Oregano Leaves, ', '0.5', ' tsp' ]
 ```
 
-- Change number, latin characters width.
+- util.toFullWidth(str)
 
 ```js
 const str = "Lorem ipsum dolor sit amet.";
-const full = util.toFullWidth(str);
+const res = util.toFullWidth(str);
 // Ｌｏｒｅｍ　ｉｐｓｕｍ　ｄｏｌｏｒ　ｓｉｔ　ａｍｅｔ．
-const half = util.toHalfWidth(full);
+```
+
+- util.toHalfWidth(str)
+
+```js
+const str = "Ｌｏｒｅｍ　ｉｐｓｕｍ　ｄｏｌｏｒ　ｓｉｔ　ａｍｅｔ．";
+const res = util.toHalfWidth(str);
 // Lorem ipsum dolor sit amet.
 ```
 
 - util.compare(strA, strB)
 
-Compare all characters.
-
 ```js
+// Compare characters.
 const a = "Lorem ipsum dolor sit amet.";
 const b = "Lorem ipsum foobar sit aget.";
 const res = util.compare(a, b);
@@ -128,10 +146,8 @@ const res = util.compare(a, b);
 // }
 ```
 
-Compare after split by word.
-
 ```js
-// 
+// Compare words.
 const a = "Lorem ipsum dolor sit amet.".split(/([\s])/g);
 const b = "Lorem ipsum foobar sit aget.".split(/([\s])/g);
 const res = util.compare(a, b);
